@@ -11,6 +11,9 @@ import SwiftSocket
 
 class ViewController: UIViewController {
     
+    @IBOutlet var shapeView : ShapeView!
+    @IBOutlet var scrollView : UIScrollView!
+    
     func loadServerData(client : TCPClient) -> Data
     {
         var serverData = Data()
@@ -82,9 +85,10 @@ class ViewController: UIViewController {
                 let shapeObjects = parseServerData(data: data)
                 
                 if shapeObjects.count > 0 {
-                    
-                    
+                    shapeView.updateShapeObjects(newShapeObjects: shapeObjects)
                 }
+                
+                print("content view height and width is \(scrollView.contentSize.height) & w: \(scrollView.contentSize.width) & shapeView height \(shapeView.frame.size.height) & width \(shapeView.frame.size.width)")
             }
             
         case .failure(let error):
