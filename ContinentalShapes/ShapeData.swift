@@ -15,7 +15,7 @@ enum ShapeType {
 }
 
 struct ShapeData {
-    func fillCircleStruct(array : [UInt8]) -> CircleStruct? {
+    static func fillCircleStruct(array : [UInt8]) -> CircleStruct? {
         
         if Validate.checkIfEnoughBytesToFillCircle(array: array) {
             do {
@@ -34,7 +34,7 @@ struct ShapeData {
         return nil
     }
     
-    func fillRectangleStruct(array : [UInt8]) -> RectangleStruct? {
+    static func fillRectangleStruct(array : [UInt8]) -> RectangleStruct? {
         if Validate.checkIfEnoughBytesToFillRectangle(array: array) {
             do {
                 let x = try Validate.swapBigToHostAndValidateUInt16(input: UInt16(array[0]))
@@ -51,7 +51,7 @@ struct ShapeData {
         return nil
     }
     
-    func fillTriangleStruct(array : [UInt8]) -> TriangleStruct? {
+    static func fillTriangleStruct(array : [UInt8]) -> TriangleStruct? {
         if Validate.checkIfEnoughBytesToFillTriangle(array: array) {
             do {
                 let x1 = try Validate.swapBigToHostAndValidateUInt16(input: UInt16(array[0]))

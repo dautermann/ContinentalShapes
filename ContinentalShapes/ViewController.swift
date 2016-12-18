@@ -27,8 +27,9 @@ class ViewController: UIViewController {
     }
     
     
-    func parseServerData(data : Data)
+    func parseServerData(data : Data) -> [AnyObject]
     {
+        var shapeObjects = [AnyObject]()
         var currentIndex = 0
         var startIndex = 0;
         let array = [UInt8](data)
@@ -43,12 +44,19 @@ class ViewController: UIViewController {
                 
                 switch potentialShapeByte {
                 case 0x01 : // circle
-                    fillCircleStruct(array: Array(array[startIndex+2...currentIndex-2]))
+                    if let circleStruct = ShapeData.fillCircleStruct(array: Array(array[startIndex+2...currentIndex-2]))
+                    {
+                        shapeObjects.append(circleStruct as AnyObject)
+                    }
                 case 0x02 : // rectangle
-                    fillRectangleStruct(array: Array(array[startIndex+2...currentIndex-2]))
+                    if let rectangleStruct = ShapeData.fillRectangleStruct(array: Array(array[startIndex+2...currentIndex-2])) {
+                        shapeObjects.append(rectangleStruct as AnyObject)
+                    }
                     break
                 case 0x03 : // triangle
-                    fillTriangleStruct(array: Array(array[startIndex+2...currentIndex-2]))
+                    if let triangleStruct = ShapeData.fillTriangleStruct(array: Array(array[startIndex+2...currentIndex-2])) {
+                        shapeObjects.append(triangleStruct as AnyObject)
+                    }
                     break
                 default :
                     print("bogus shape?")
@@ -56,6 +64,7 @@ class ViewController: UIViewController {
             }
             currentIndex=currentIndex+1
         }
+        return shapeObjects
     }
 
     override func viewDidLoad() {
@@ -69,7 +78,14 @@ class ViewController: UIViewController {
         // Connection successful 🎉
             let data = loadServerData(client: client)
             
-            parseServerData(data: data)
+            if data.isEmpty == false {
+                let shapeObjects = parseServerData(data: data)
+                
+                if shapeObjects.count > 0 {
+                    
+                    
+                }
+            }
             
         case .failure(let error):
             // 💩

@@ -11,6 +11,8 @@ import UIKit
 
 class ShapeView : UIView {
     
+    var shapeObjects = [AnyObject]()
+
     override func awakeFromNib() {
         
         let zoomFactor : CGFloat = 10.0
@@ -19,5 +21,11 @@ class ShapeView : UIView {
         self.frame = CGRect(x: 0.0, y: 0.0, width: heightAndWidth, height: heightAndWidth)
     }
     
+    func updateShapeObjects(newShapeObjects : [AnyObject])
+    {
+        shapeObjects = newShapeObjects
+        
+        
+    }
 
 }
